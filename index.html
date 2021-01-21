@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Vue School Chat Room</title>
+</head>
+<body>
+  <div id="chat" class="container"> 
+    <h1>Vue School Chat Room</h1>
+    <div v-for="message in messages" class="card">
+      <div class="card-body">
+        <!-- nickname -->
+        <h6 class="card-subtitle mb-2 text-muted">{{ message.nickname }}</h6>
+        <!-- content -->
+        <p class="card-text">{{ message.text }}</p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <!-- New Message -->
+  <form @submit.prevent="storeMessage">
+    <div class="form-group">
+      <label>Message:</label>
+      <textarea v-model="messageText" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Nickname:</label>
+      <input v-model="nickname" class="form-control"/>
+    </div>
+    <button class="btn btn-primary">Send</button>
+  </form>
+</div>
+
+<script type="text/javascript">
+  new Vue({
+    el: "#chat",
+
+    data: {
+      messages: [],
+      messageText: '',
+      nickname: 'hootlex'
+    },
+    methods: {
+      storeMessage () {
+        this.messages.push({text: this.messageText, nickname: this.nickname})
+        this.messageText = ''
+      }
+    },
+
+    created () {
+      database.ref('messages').on('child_added', snapshot => this.messages.push(snapshot.val()))
+    }
+  })
+</script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyBHrAZa7dMgmjJE8MNSWk8Lj0amwe8bw8U",
+    authDomain: "vue-school-chat-room-a24ee.firebaseapp.com",
+    databaseURL: "https://vue-school-chat-room-a24ee-default-rtdb.firebaseio.com",
+    projectId: "vue-school-chat-room-a24ee",
+    storageBucket: "vue-school-chat-room-a24ee.appspot.com",
+    messagingSenderId: "952609046601",
+    appId: "1:952609046601:web:213c866e500f9f8d007f98",
+    measurementId: "G-VE05QJKJVV"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+</body>
+</html>
