@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://unpkg.com/vue"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <title>Vue School Chat Room</title>
 </head>
@@ -37,6 +37,24 @@
 </div>
 
 <script type="text/javascript">
+  const firebaseConfig = {
+    apiKey: "AIzaSyBHrAZa7dMgmjJE8MNSWk8Lj0amwe8bw8U",
+    authDomain: "vue-school-chat-room-a24ee.firebaseapp.com",
+    databaseURL: "https://vue-school-chat-room-a24ee-default-rtdb.firebaseio.com",
+    projectId: "vue-school-chat-room-a24ee",
+    storageBucket: "vue-school-chat-room-a24ee.appspot.com",
+    messagingSenderId: "952609046601",
+    appId: "1:952609046601:web:213c866e500f9f8d007f98",
+    measurementId: "G-VE05QJKJVV"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+
+  const database = firebase.database()
+
+  database.ref('messages').on('value', snapshot => console.log(snapshot.val()))
+
   new Vue({
     el: "#chat",
 
@@ -58,29 +76,6 @@
   })
 </script>
 
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
-
-<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyBHrAZa7dMgmjJE8MNSWk8Lj0amwe8bw8U",
-    authDomain: "vue-school-chat-room-a24ee.firebaseapp.com",
-    databaseURL: "https://vue-school-chat-room-a24ee-default-rtdb.firebaseio.com",
-    projectId: "vue-school-chat-room-a24ee",
-    storageBucket: "vue-school-chat-room-a24ee.appspot.com",
-    messagingSenderId: "952609046601",
-    appId: "1:952609046601:web:213c866e500f9f8d007f98",
-    measurementId: "G-VE05QJKJVV"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
 </body>
 </html>
